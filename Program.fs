@@ -1,13 +1,10 @@
 ﻿open System
 
-let canTake (queenx, queeny) (otherx, othery) =
-    queenx = otherx || queeny = othery
-    || queenx - queeny = otherx - othery
-    || queenx + queeny = otherx + othery
+let canTake (ax, ay) (bx, by) =
+    ax = bx || ay = by || ax - ay = bx - by || ax + ay = bx + by
 
 let attacking queens =
-    let isAttacking q = 
-        Seq.exists (canTake q) (Seq.where ((<>) q) queens)
+    let isAttacking q = Seq.exists (canTake q) (Seq.where ((<>) q) queens)
     Seq.where isAttacking queens
 
 open Microsoft.VisualStudio.TestTools.UnitTesting
