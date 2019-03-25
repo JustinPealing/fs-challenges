@@ -1,16 +1,14 @@
 ﻿open System
 
 let canTake (queenx, queeny) (otherx, othery) =
-    if queenx = otherx then true
-    else if queeny = othery then true
-    else if queenx - queeny = otherx - othery then true
-    else queenx + queeny = otherx + othery
+    queenx = otherx || queeny = othery
+    || queenx - queeny = otherx - othery
+    || queenx + queeny = otherx + othery
 
-let isAttacking others queen = 
-    Seq.exists (canTake queen) others
-
-let rec attacking queens =
-    Seq.where (fun q -> Seq.exists (fun x -> x <> q && canTake x q) queens) queens
+let attacking queens =
+    let isAttacking q = 
+        Seq.exists (canTake q) (Seq.where ((<>) q) queens)
+    Seq.where isAttacking queens
 
 open Microsoft.VisualStudio.TestTools.UnitTesting
 
